@@ -1,0 +1,84 @@
+// UserController.flip - Controller for User CRUD operations
+
+class UserController {
+    init() {
+        this.dataFile = "app/data/users.txt";
+    }
+
+    function loadUsers() {
+        var !users = [];
+        if file_exists(this.dataFile): {
+            var !content = read_file(this.dataFile);
+            var !lines = split(!content, "\n");
+            
+            foreach !lines as !line: {
+                if len(trim(!line)) > 0: {
+                    var !parts = split(!line, "|");
+                    if len(!parts) >= 4: {
+                        var !user = {
+                            "id": num(!parts[0]),
+                            "name": !parts[1],
+                            "email": !parts[2],
+                            "role": !parts[3]
+                        };
+                        push(!users, !user);
+                    }
+                }
+            }
+        }
+        return !users;
+    }
+
+    function saveUsers(!users) {
+        var !content = "";
+        foreach !users as !user: {
+            !content = !content + str(!user.id) + "|" + !user.name + "|" + !user.email + "|" + !user.role + "\n";
+        }
+        write_file(this.dataFile, !content);
+    }
+
+    function index() {
+        return this.loadUsers();
+    }
+
+    function getNextId() {
+        var !users = this.loadUsers();
+        var !maxId = 0;
+        foreach !users as !user: {
+            if !user.id > !maxId: {
+                !maxId = !user.id;
+            }
+        }
+        return !maxId + 1;
+    }
+
+    function store(!name, !email, !role) {
+        var !users = this.loadUsers();
+        var !id = this.getNextId();
+        
+        var !newUser = {
+            "id": !id,
+            "name": !name,
+            "email": !email,
+            "role": !role
+        };
+        
+        push(!users, !newUser);
+        this.saveUsers(!users);
+        return !newUser;
+    }
+
+    function destroy(!targetId) {
+        var !users = this.loadUsers();
+        var !newUsers = [];
+        
+        foreach !users as !user: {
+            if !user.id != !targetId: {
+                push(!newUsers, !user);
+            }
+        }
+        
+        this.saveUsers(!newUsers);
+        return true;
+    }
+}

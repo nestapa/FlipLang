@@ -1,0 +1,30 @@
+// Database.flip - Database connection class
+
+class Database {
+    init(!host, !user, !pass, !db) {
+        this.host = !host;
+        this.user = !user;
+        this.pass = !pass;
+        this.db = !db;
+        this.connection = null;
+    }
+
+    function connect() {
+        this.connection = mysql_connect(this.host, this.user, this.pass, this.db);
+        return this.connection;
+    }
+
+    function query(!sql) {
+        if this.connection: {
+            return mysql_query(this.connection, !sql);
+        }
+        return null;
+    }
+
+    function close() {
+        if this.connection: {
+            mysql_close(this.connection);
+            this.connection = null;
+        }
+    }
+}

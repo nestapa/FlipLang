@@ -1,0 +1,13 @@
+// config.flip - Application Configuration
+
+var !APP_NAME = "FlipLang MVC App";
+var !APP_VERSION = "1.0.0";
+
+// Database Configuration
+var !DB_HOST = "127.0.0.1";
+var !DB_USER = "root";
+var !DB_PASS = "";
+var !DB_NAME = "flipapp";
+
+// Application Settings
+var !DEBUG = true;

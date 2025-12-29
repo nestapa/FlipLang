@@ -1,0 +1,2 @@
+1|Admin|admin@example.com|admin
+2|John Doe|john@example.com|user

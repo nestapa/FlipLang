@@ -1,0 +1,27 @@
+// User.flip - User model class
+
+class User {
+    init(!id, !name, !email, !role) {
+        this.id = !id;
+        this.name = !name;
+        this.email = !email;
+        this.role = !role;
+        this.created_at = date();
+    }
+
+    function toArray() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "email": this.email,
+            "role": this.role,
+            "created_at": this.created_at
+        };
+    }
+
+    function validate() {
+        if len(this.name) < 2: return false;
+        if !contains(this.email, "@"): return false;
+        return true;
+    }
+}
